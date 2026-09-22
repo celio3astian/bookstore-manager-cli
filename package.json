@@ -1,0 +1,25 @@
+{
+  "name": "bookstore-manager-cli",
+  "version": "1.0.0",
+  "description": "Aplicação CLI para gerenciamento de autores, livros, clientes e empréstimos",
+  "main": "main.ts",
+  "scripts": {
+    "dev": "tsx src/main.ts",
+    "build": "tsc",
+    "start": "tsx src/main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "undici-types": "^8.9.0"
+  }
+}
