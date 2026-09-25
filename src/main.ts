@@ -1,1 +1,5 @@
-console.log("BookStore Manager CLI");
+import { MenuPrincipal } from "./menus/MenuPrincipal";
+
+const menu = new MenuPrincipal();
+
+menu.exibir();
