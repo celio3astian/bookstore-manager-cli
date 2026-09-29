@@ -22,4 +22,8 @@ export class AutorController {
  remover(id:number){
    return this.service.removerAutor(id);
  }
+
+ atualizar(autor: any) {
+    return this.service.atualizarAutor(autor);
+  }
 }

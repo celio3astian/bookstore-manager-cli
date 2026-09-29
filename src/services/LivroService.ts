@@ -1,27 +1,25 @@
 import { LivroRepository } from "../repositories/LivroRepository";
-import type { Livro } from "../models/Livro";
+import { Livro } from "../models/Livro";
 
 export class LivroService {
 
-    private repository: LivroRepository;
+  constructor(
+    private repository: LivroRepository
+  ) {}
 
-    constructor() {
-        this.repository = new LivroRepository();
-    }
+  async criarLivro(livro: Livro) {
+    return await this.repository.criar(livro);
+  }
 
-    criarLivro(livro: Livro): Livro {
-        return this.repository.criar(livro);
-    }
+  async listarLivros() {
+    return await this.repository.listar();
+  }
 
-    listarLivros(): Livro[] {
-        return this.repository.listar();
-    }
+  async buscarLivro(id: number) {
+    return await this.repository.buscarPorId(id);
+  }
 
-    buscarLivro(id: number): Livro | undefined {
-        return this.repository.buscarPorId(id);
-    }
-
-    removerLivro(id: number): boolean {
-        return this.repository.remover(id);
-    }
+  async removerLivro(id: number) {
+    return await this.repository.remover(id);
+  }
 }

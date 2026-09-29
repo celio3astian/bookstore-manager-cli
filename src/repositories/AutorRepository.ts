@@ -1,36 +1,70 @@
 import type { Autor } from "../models/Autor";
+import { connection } from "../database/connection";
 
 export class AutorRepository {
 
-  private autores: Autor[] = [];
-
-  criar(autor: Autor): Autor {
-    this.autores.push(autor);
-    return autor;
-  }
-
-  listar(): Autor[] {
-    return this.autores;
-  }
-
-  buscarPorId(id: number): Autor | undefined {
-    return this.autores.find(
-      autor => autor.id === id
-    );
-  }
-
-  remover(id: number): boolean {
-
-    const index = this.autores.findIndex(
-      autor => autor.id === id
+  async criar(autor: Autor): Promise<Autor> {
+    const resultado = await connection.query(
+      `
+      INSERT INTO autores (nome, nacionalidade)
+      VALUES ($1, $2)
+      RETURNING id, nome, nacionalidade
+      `,
+      [autor.nome, autor.nacionalidade]
     );
 
-    if (index === -1) {
-      return false;
-    }
+    return resultado.rows[0];
+  }
 
-    this.autores.splice(index, 1);
+  async listar(): Promise<Autor[]> {
+    const resultado = await connection.query(
+      `
+      SELECT id, nome, nacionalidade
+      FROM autores
+      ORDER BY id
+      `
+    );
 
-    return true;
+    return resultado.rows;
+  }
+
+  async buscarPorId(id: number): Promise<Autor | undefined> {
+    const resultado = await connection.query(
+      `
+      SELECT id, nome, nacionalidade
+      FROM autores
+      WHERE id = $1
+      `,
+      [id]
+    );
+
+    return resultado.rows[0];
+  }
+
+  async remover(id: number): Promise<boolean> {
+    const resultado = await connection.query(
+      `
+      DELETE FROM autores
+      WHERE id = $1
+      `,
+      [id]
+    );
+
+    return (resultado.rowCount ?? 0) > 0;
+  }
+
+  async atualizar(autor: Autor): Promise<Autor | undefined> {
+    const resultado = await connection.query(
+      `
+      UPDATE autores
+      SET nome = $1,
+          nacionalidade = $2
+      WHERE id = $3
+      RETURNING id, nome, nacionalidade
+      `,
+      [autor.nome, autor.nacionalidade, autor.id]
+    );
+
+    return resultado.rows[0];
   }
 }

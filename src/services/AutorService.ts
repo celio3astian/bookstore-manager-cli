@@ -22,4 +22,8 @@ export class AutorService {
     removerAutor(id: number) {
         return this.repository.remover(id);
     }
+
+    atualizarAutor(autor: Autor) {
+        return this.repository.atualizar(autor);
+    }
 }
