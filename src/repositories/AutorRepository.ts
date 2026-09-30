@@ -1,7 +1,9 @@
 import type { Autor } from "../models/Autor";
 import { connection } from "../database/connection";
+import { BaseRepository } from "./BaseRepository";
 
-export class AutorRepository {
+
+export class AutorRepository implements BaseRepository<Autor> {
 
   async criar(autor: Autor): Promise<Autor> {
     const resultado = await connection.query(

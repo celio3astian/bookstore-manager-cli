@@ -1,7 +1,9 @@
 import type { Livro } from "../models/Livro";
 import { connection } from "../database/connection";
+import { BaseRepository } from "./BaseRepository";
 
-export class LivroRepository {
+
+export class LivroRepository implements BaseRepository<Livro> {
 
   async criar(livro: Livro): Promise<Livro> {
     const resultado = await connection.query(
