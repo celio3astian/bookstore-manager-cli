@@ -1,3 +1,3 @@
 export interface BaseRepository<T> {
-  listar(): Promise<T[]>;
+  listar(): T[] | Promise<T[]>;
 }

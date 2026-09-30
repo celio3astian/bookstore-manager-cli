@@ -1,6 +1,7 @@
 import type { Cliente } from "../models/Cliente";
+import { BaseRepository } from "./BaseRepository";
 
-export class ClienteRepository {
+export class ClienteRepository implements BaseRepository<Cliente> {
 
   private clientes: Cliente[] = [];
 
