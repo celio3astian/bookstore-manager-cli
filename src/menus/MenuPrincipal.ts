@@ -19,6 +19,8 @@ import { DevolucaoController } from "../controllers/DevolucaoController";
 import { DevolucaoService } from "../services/DevolucaoService";
 import { DevolucaoRepository } from "../repositories/DevolucaoRepository";
 
+import { RelatorioService } from "../services/RelatorioService";
+
 
 export class MenuPrincipal {
 
@@ -27,34 +29,46 @@ export class MenuPrincipal {
     output: process.stdout
   });
 
+  private autorRepository = new AutorRepository();
+  private livroRepository = new LivroRepository();
+  private clienteRepository = new ClienteRepository();
+  private emprestimoRepository = new EmprestimoRepository();
+  private devolucaoRepository = new DevolucaoRepository();
+
   private autorController = new AutorController(
     new AutorService(
-      new AutorRepository()
+      new AutorRepository
     )
   );
 
   private livroController = new LivroController(
     new LivroService(
-      new LivroRepository()
+      new LivroRepository
     )
   );
 
   private clienteController = new ClienteController(
     new ClienteService(
-      new ClienteRepository()
+      new ClienteRepository
     )
   );
 
   private emprestimoController = new EmprestimoController(
     new EmprestimoService(
-      new EmprestimoRepository()
+      new EmprestimoRepository
     )
   );
 
   private devolucaoController = new DevolucaoController(
-    new DevolucaoService(
-      new DevolucaoRepository()
-    )
+    new DevolucaoService(this.devolucaoRepository)
+  );
+
+  private relatorioService = new RelatorioService(
+    this.autorRepository,
+    this.livroRepository,
+    this.clienteRepository,
+    this.emprestimoRepository,
+    this.devolucaoRepository
   );
 
 
