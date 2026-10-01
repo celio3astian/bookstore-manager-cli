@@ -36,32 +36,24 @@ export class MenuPrincipal {
   private devolucaoRepository = new DevolucaoRepository();
 
   private autorController = new AutorController(
-    new AutorService(
-      new AutorRepository
-    )
+    new AutorService(this.autorRepository)
   );
 
   private livroController = new LivroController(
-    new LivroService(
-      new LivroRepository
-    )
+    new LivroService(this.livroRepository)
   );
 
   private clienteController = new ClienteController(
-    new ClienteService(
-      new ClienteRepository
-    )
+    new ClienteService(this.clienteRepository)
   );
 
   private emprestimoController = new EmprestimoController(
-    new EmprestimoService(
-      new EmprestimoRepository
-    )
+    new EmprestimoService(this.emprestimoRepository)
   );
 
   private devolucaoController = new DevolucaoController(
-    new DevolucaoService(this.devolucaoRepository)
-  );
+  new DevolucaoService(this.devolucaoRepository)
+);
 
   private relatorioService = new RelatorioService(
     this.autorRepository,
@@ -503,7 +495,7 @@ export class MenuPrincipal {
         case "1": {
           const livros = await this.livroController.listar();
           const emprestimos = this.emprestimoController.listar();
-          const devolucoes = this.devolucaoController.listar();
+          const devolucoes = await this.devolucaoRepository.listar();
 
           const emprestimosAtivos = emprestimos.filter(
             (emprestimo) =>

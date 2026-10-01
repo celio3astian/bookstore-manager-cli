@@ -1,6 +1,7 @@
 import type { Devolucao } from "../models/Devolucao";
+import { BaseRepository } from "./BaseRepository";
 
-export class DevolucaoRepository {
+export class DevolucaoRepository implements BaseRepository<Devolucao> {
 
   private devolucoes: Devolucao[] = [];
 
@@ -9,7 +10,7 @@ export class DevolucaoRepository {
     return devolucao;
   }
 
-  listar(): Devolucao[] {
+  async listar(): Promise<Devolucao[]> {
     return this.devolucoes;
   }
 
@@ -17,7 +18,6 @@ export class DevolucaoRepository {
     return this.devolucoes.find(
       devolucao => devolucao.id === id
     );
-
   }
 
   remover(id: number): boolean {

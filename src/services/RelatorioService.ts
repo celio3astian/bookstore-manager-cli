@@ -16,9 +16,9 @@ export class RelatorioService {
         private devolucaoRepository: DevolucaoRepository
     ) { }
 
-    private listarEmprestimosAtivos(): Emprestimo[] {
+    private async listarEmprestimosAtivos(): Promise<Emprestimo[]> {
         const emprestimos = this.emprestimoRepository.listar();
-        const devolucoes = this.devolucaoRepository.listar();
+        const devolucoes = await this.devolucaoRepository.listar();
 
         return emprestimos.filter(
             (emprestimo) =>
@@ -30,7 +30,7 @@ export class RelatorioService {
 
     async listarLivrosDisponiveis(): Promise<Livro[]> {
         const livros = await this.livroRepository.listar();
-        const emprestimosAtivos = this.listarEmprestimosAtivos();
+        const emprestimosAtivos = await this.listarEmprestimosAtivos();
 
         return livros.filter(
             (livro) =>
@@ -42,8 +42,7 @@ export class RelatorioService {
 
     async listarLivrosEmprestados(): Promise<Livro[]> {
         const livros = await this.livroRepository.listar();
-        const emprestimosAtivos = this.listarEmprestimosAtivos();
-
+        const emprestimosAtivos = await this.emprestimoRepository.listar();
         return livros.filter(
             (livro) =>
                 emprestimosAtivos.some(
@@ -80,9 +79,9 @@ export class RelatorioService {
         }));
     }
 
-    listarClientesComEmprestimosAtivos(): Cliente[] {
+    async listarClientesComEmprestimosAtivos(): Promise<Cliente[]> {
         const clientes = this.clienteRepository.listar();
-        const emprestimosAtivos = this.listarEmprestimosAtivos();
+        const emprestimosAtivos = await this.listarEmprestimosAtivos();
 
         return clientes.filter((cliente) =>
             emprestimosAtivos.some(
